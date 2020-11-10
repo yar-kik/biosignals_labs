@@ -1,6 +1,7 @@
-computer_vision/ 
+/computer_vision/
 venv/ 
 .idea/ 
-laba2tkachuk/ 
-laba3tkachuk/ 
-laba4tkachuk/ 
+/laba2tkachuk/
+/laba3tkachuk/
+/laba4tkachuk/
+/test_laba/
