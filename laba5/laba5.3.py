@@ -11,7 +11,6 @@ from typing import Union
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.fft import fft
 from scipy.signal.windows import flattop
 
 
