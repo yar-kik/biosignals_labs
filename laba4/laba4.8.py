@@ -13,10 +13,13 @@ sample_rate = 1000
 duration = 1
 amplitude = 1
 frequency1 = 20.5
-
-
 null = [np.zeros(0), np.zeros(10), np.zeros(100), np.zeros(1000), np.zeros(10000)]
-for i in range(len(null)):
+x_label = ['Час, с', 'Частота, Гц']
+title = ['Сигнал', 'Спектр сигналу']
+
+fig, axes = plt.subplots(len(null), 2, constrained_layout=True)
+fig.set_size_inches(8, 6)
+for i, ax in enumerate(axes):
     time = np.linspace(0, duration, duration * sample_rate, endpoint=False)
     frequency = np.linspace(0, sample_rate, duration * sample_rate)
     signal = amplitude * sin(2 * pi * frequency1 * time)
@@ -24,14 +27,15 @@ for i in range(len(null)):
     y = 2 * np.abs(fft(x) / len(x))
     time_new = np.linspace(0, len(x) / sample_rate, len(x), endpoint=False)
     frequency_new = np.linspace(0, sample_rate, len(x), endpoint=False)
-    fig, axes = plt.subplots(2, constrained_layout=True)
-    fig.set_size_inches(8, 6)
-    axes[0].plot(time_new, x)
-    axes[1].stem(frequency_new, y)
-    axes[1].set_xlim(19, 22)
-    axes[0].set_xlabel('Час, с')
-    axes[1].set_xlabel('Частота, Гц')
-    # ax.set_ylabel("Амплітуда, В")
-    # ax[0].set_title(f"Частота {f[i]} Гц")
-    axes[1].set_title("Спектр")
-    plt.show()
+
+    ax[0].plot(time_new, x)
+    ax[1].stem(frequency_new, y)
+    ax[1].set_xlim(19, 22)
+    for j in range(2):
+        ax[j].set_xlabel(x_label[j])
+        ax[j].set_title(f"{title[j]} із частотою 20.5 Гц ({len(null[i])} нульових відліків)")
+        ax[j].set_ylabel("Амплітуда")
+        ax[j].minorticks_on()
+        ax[j].grid(which='major', linewidth=1.2)
+        ax[j].grid(which='minor', linewidth=.5)
+plt.show()
