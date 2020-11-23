@@ -11,22 +11,24 @@ x = eeg_healthy['sig'][0]
 sample_rate = 256
 duration = len(x) / sample_rate
 
-time = np.linspace(0, duration, len(x))
-frequency = np.linspace(0, sample_rate, len(x))
+t = np.linspace(0, duration, len(x))
+f = np.linspace(0, sample_rate, len(x))
 y = fft(x)
-iy = ifft(y)
-amplitude_y = 2 * np.abs(y / len(x))
-print(np.std(np.abs(x-iy)))
+restored_x = ifft(y)
 
-fig, axes = plt.subplots(3, constrained_layout=True)
-fig.set_size_inches(8, 6)
-axes[0].plot(time, x)
-axes[1].stem(frequency, amplitude_y)
-axes[2].plot(time, iy.real)
-axes[1].set_xlim(0, sample_rate / 2)
-axes[0].set_xlabel('Час, с')
-axes[1].set_xlabel('Частота, Гц')
-# ax.set_ylabel("Амплітуда, В")
-# ax[0].set_title(f"Частота {f[i]} Гц")
-axes[1].set_title("Спектр")
+standard_deviation = np.std(np.abs(x - restored_x))
+print("Середньоквадратична похибка відновлення: ", standard_deviation)
+
+title = ['Початковий сигнал', "Відновлений сигнал"]
+fig, ax = plt.subplots(2, constrained_layout=True)
+fig.set_size_inches(12, 6)
+ax[0].plot(t, x)
+ax[1].plot(t, restored_x.real)
+for j in range(2):
+    ax[j].set_xlabel('Час, с')
+    ax[j].set_title(title[j])
+    ax[j].set_ylabel("Амплітуда")
+    ax[j].minorticks_on()
+    ax[j].grid(which='major', linewidth=1.2)
+    ax[j].grid(which='minor', linewidth=.5)
 plt.show()
