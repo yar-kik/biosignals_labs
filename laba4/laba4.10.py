@@ -9,6 +9,9 @@ from scipy.io import loadmat
 
 
 def build_spectral_density(x: np.array, fs: Union[int, float]) -> None:
+    """
+    Функція для побудови графіка сигналу та спектральної густини потужності
+    """
     duration = len(x) / fs
     t = np.linspace(0, duration, len(x))
     f = np.linspace(0, fs, len(x))
@@ -16,7 +19,7 @@ def build_spectral_density(x: np.array, fs: Union[int, float]) -> None:
     power_spectral_density = y ** 2
 
     x_label = ['Час, с', 'Частота, Гц']
-    y_label = ["Амплітуда, мкВ", r"Спектральна густина, $мкВ^2$/Гц"]
+    y_label = ["Амплітуда", r"Спектральна густина"]
     title = ['Сигнал', 'Спектральна густина потужності сигналу']
 
     fig, ax = plt.subplots(2, constrained_layout=True)
