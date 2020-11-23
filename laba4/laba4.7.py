@@ -22,26 +22,28 @@ signal_amplitude = 1
 noise_amplitude = 10
 frequency1 = 20
 
-time = np.linspace(0, duration, int(duration * sample_rate), endpoint=False)
-frequency = np.linspace(0, sample_rate, int(duration * sample_rate))
-signal = signal_amplitude * sin(2 * pi * frequency1 * time)
-noise = noise_amplitude * np.random.rand(len(time))
+t = np.linspace(0, duration, int(duration * sample_rate), endpoint=False)
+f = np.linspace(0, sample_rate, int(duration * sample_rate))
+signal = signal_amplitude * sin(2 * pi * frequency1 * t)
+noise = noise_amplitude * np.random.rand(len(t))
 x = signal + noise
-# x = np.random.random(len(time))
 y = 2 * np.abs(fft(x - np.mean(x)) / len(x))
-# y = 2 * np.abs(fft(x) / len(x))
 
+title = ['Сигнал', 'Амплітудний спектр сигналу']
+x_label = ['Час, с', 'Частота, Гц']
 
-fig, axes = plt.subplots(2, constrained_layout=True)
-fig.set_size_inches(8, 6)
-axes[0].plot(time, x)
-axes[1].stem(frequency, y)
-axes[1].set_xlim(0, sample_rate / 2)
-axes[0].set_xlabel('Час, с')
-axes[1].set_xlabel('Частота, Гц')
-axes[0].set_ylabel("Амплітуда, В")
-axes[1].set_ylabel("Амплітуда, В")
-axes[0].set_title("Частота")
-axes[1].set_title("Спектр")
+fig, ax = plt.subplots(2, constrained_layout=True)
+fig.set_size_inches(12, 6)
+ax[0].plot(t, x)
+ax[1].stem(f, y)
+ax[1].set_xlim(0, sample_rate / 2)
+for j in range(2):
+    ax[j].set_xlabel(x_label[j])
+    ax[j].set_title(title[j])
+    ax[j].set_ylabel("Амплітуда")
+    ax[j].minorticks_on()
+    ax[j].grid(which='major', linewidth=1.2)
+    ax[j].grid(which='minor', linewidth=.5)
 plt.show()
+
 
