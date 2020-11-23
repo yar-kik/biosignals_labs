@@ -15,7 +15,7 @@ amplitude = 1
 frequency1 = 20.5
 null = [np.zeros(0), np.zeros(10), np.zeros(100), np.zeros(1000), np.zeros(10000)]
 x_label = ['Час, с', 'Частота, Гц']
-title = ['Сигнал', 'Спектр сигналу']
+title = ['Сигнал', 'Амплітудний спектр сигналу']
 
 fig, axes = plt.subplots(len(null), 2, constrained_layout=True)
 fig.set_size_inches(8, 6)

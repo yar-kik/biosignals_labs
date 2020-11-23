@@ -13,7 +13,7 @@ frequency = np.linspace(0, sample_rate, duration * sample_rate)
 x = np.random.rand(len(time))
 y = 2 * np.abs(fft(x) / len(x))
 x_label = ['Час, с', 'Частота, Гц']
-title = ['Графік випадкового сигналу', 'Спектр сигналу']
+title = ['Графік випадкового сигналу', 'Амплітудний спектр сигналу']
 
 fig, ax = plt.subplots(2, constrained_layout=True)
 fig.set_size_inches(12, 6)

@@ -10,7 +10,7 @@ f = np.arange(0, sample_rate, 1 / duration)
 frequency = np.array([2, 2.5, 40, 100, 600])
 
 x_label = ['Час, с', 'Частота, Гц']
-title = ['Сигнал', 'Спектр сигналу']
+title = ['Сигнал', 'Амплітудний спектр сигналу']
 
 figure, axes = plt.subplots(len(frequency), 2, constrained_layout=True)
 figure.set_size_inches(12, 6)
