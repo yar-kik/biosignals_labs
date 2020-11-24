@@ -4,9 +4,8 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.fft import fft
 from numpy import sin, pi
-from scipy.signal.windows import flattop
+from scipy.signal import spectrogram
 
 sample_rate = 128
 duration = 3
@@ -14,34 +13,32 @@ frequency = 20
 
 time = np.linspace(0, duration, duration * sample_rate, endpoint=False)
 x1 = sin(2 * pi * frequency * time)
-x2 = sin(2 * pi * frequency * time)
-
+x2 = np.copy(x1)
 breaking1 = round(1.05 * sample_rate)
 breaking2 = 2 * sample_rate
 
-
 x1[breaking1:breaking1 + 10] = 0
 x2[breaking2:breaking2 + 10] = 0
+x = [x1, x2]
 
-
-x12 = [x1, x2]
 window_duration = .05
-NFFT = int(sample_rate * window_duration)
+overlap = .9
 
-window = flattop(NFFT)
-
-
-figure, axes = plt.subplots(2, 2, constrained_layout=True)
-figure.set_size_inches(8, 6)
+x_label = ["Час, с", "Час, с"]
+y_label = ["Амплітуда", "Частота, Гц"]
+title = [['Сигнал із розривом в момент часу 1.05с', "Спектрограма"],
+         ["Сигнал із розривом в момент часу 2.0с", "Спектрограма"]]
+figure, axes = plt.subplots(len(x), 2, constrained_layout=True)
+figure.set_size_inches(12, 6)
 for i, ax in enumerate(axes):
-    ax[0].plot(time, x12[i])
-    ax[1].specgram(x12[i], Fs=sample_rate, NFFT=NFFT, noverlap=NFFT//2, window=window)
-    ax[0].set_xlabel('Час, с')
-    ax[1].set_xlabel('Частота, Гц')
-    # ax.set_ylabel("Амплітуда, В")
-    ax[0].set_title("Частота 20 Гц")
-    ax[1].set_title("Спектр")
-    # ax.minorticks_on()
-    # ax.grid(which='major', linewidth=1.2)
-    # ax.grid(which='minor', linewidth=.5)
+    f, t, y = spectrogram(x[i], fs=sample_rate, window='flattop',
+                          noverlap=int(window_duration * sample_rate * overlap),
+                          nperseg=int(window_duration * sample_rate))
+    ax[0].plot(time, x[i])
+    pcm = ax[1].pcolormesh(t, f, y, shading='gouraud')
+    figure.colorbar(pcm, ax=ax[1])
+    for j in range(2):
+        ax[j].set_xlabel(x_label[j])
+        ax[j].set_title(title[i][j])
+        ax[j].set_ylabel(y_label[j])
 plt.show()
