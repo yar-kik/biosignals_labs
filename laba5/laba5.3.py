@@ -52,7 +52,7 @@ title = [["Синусоїда частоти 40 Гц", "Спектрограма
 figure, axes = plt.subplots(len(x), 2, constrained_layout=True)
 figure.set_size_inches(12, 6)
 for i, ax in enumerate(axes):
-    f, t, y = spectrogram(x[i], fs=sample_rate, window='flattop', noverlap=0, nperseg=nperseg)
+    f, t, y = spectrogram(x[i], fs=sample_rate, window='flattop', noverlap=0, nperseg=nperseg, scaling='spectrum')
     ax[0].plot(time, x[i])
     pcm = ax[1].pcolormesh(t, f, y, shading='gouraud')
     figure.colorbar(pcm, ax=ax[1])

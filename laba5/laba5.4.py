@@ -39,7 +39,7 @@ figure, axes = plt.subplots(len(x), 2, constrained_layout=True)
 figure.set_size_inches(12, 6)
 for i, ax in enumerate(axes):
     f, t, y = spectrogram(x[i], fs=sample_rate, window='flattop', noverlap=0,
-                          nperseg=int(window_duration1 * sample_rate))
+                          nperseg=int(window_duration1 * sample_rate), scaling='spectrum')
     ax[0].plot(time[i], x[i])
     pcm = ax[1].pcolormesh(t, f, y, shading='gouraud')
     figure.colorbar(pcm, ax=ax[1])
@@ -57,7 +57,7 @@ figure, axes = plt.subplots(len(x), 2, constrained_layout=True)
 figure.set_size_inches(12, 6)
 for i, ax in enumerate(axes):
     f, t, y = spectrogram(x[i], fs=sample_rate, window='flattop', noverlap=0,
-                          nperseg=int(window_duration2 * sample_rate))
+                          nperseg=int(window_duration2 * sample_rate), scaling='spectrum')
     ax[0].plot(time[i], x[i])
     pcm = ax[1].pcolormesh(t, f, y, shading='gouraud')
     figure.colorbar(pcm, ax=ax[1])
@@ -75,7 +75,7 @@ figure.set_size_inches(12, 6)
 for i, ax in enumerate(axes):
     f, t, y = spectrogram(x[i], fs=sample_rate, window='flattop',
                           noverlap=int(window_duration3 * sample_rate * .5),
-                          nperseg=int(window_duration3 * sample_rate))
+                          nperseg=int(window_duration3 * sample_rate), scaling='spectrum')
     ax[0].plot(time[i], x[i])
     pcm = ax[1].pcolormesh(t, f, y, shading='gouraud')
     figure.colorbar(pcm, ax=ax[1])

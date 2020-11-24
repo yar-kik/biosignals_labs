@@ -4,7 +4,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal.windows import flattop
-from scipy.signal import  square
+from scipy.signal import square
 
 duration = 10
 sample_rate = 128
