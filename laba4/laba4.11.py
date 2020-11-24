@@ -17,7 +17,7 @@ def build_amplitude_and_phase(x: np.array, fs: Union[int, float]) -> None:
     frequency = np.linspace(0, fs, len(x))
     transform = fft(signal - np.mean(signal))
     amplitude = 2 * np.abs(transform / len(signal))
-    phase = np.unwrap(np.angle(transform))
+    phase = np.unwrap(np.angle(2 * (transform / len(signal))))
 
     x_label = ['Час, с', 'Частота, Гц', 'Частота, Гц']
     y_label = ["Амплітуда", "Амплітуда", "Фаза, радіани"]

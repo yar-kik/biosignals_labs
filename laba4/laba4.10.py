@@ -10,7 +10,7 @@ from scipy.io import loadmat
 
 def build_spectral_density(x: np.array, fs: Union[int, float]) -> None:
     """
-    Функція для побудови графіка сигналу та спектральної густини потужності
+    Функція для побудови графіка сигналу та його спектральної густини потужності
     """
     duration = len(x) / fs
     t = np.linspace(0, duration, len(x))

@@ -40,7 +40,7 @@ fig.set_size_inches(8, 6)
 for i, ax in enumerate(axes):
     x = single_square(t, pulse_durations[i])
     y = np.abs(fft(x) / len(x))
-    phase = np.unwrap(np.angle(2 * fft(x) / len(x)))
+    phase = np.unwrap(np.angle(fft(x)))
 
     ax[0].plot(t, x)
     ax[1].stem(f, y)
@@ -61,12 +61,11 @@ fig.set_size_inches(8, 6)
 for i, ax in enumerate(axes):
     x = single_square(t - time_shift, pulse_durations[i])
     y = np.abs(2 * fft(x) / len(x))
-    phase = np.unwrap(np.angle(2 * fft(x) / len(x)))
+    phase = np.unwrap(np.angle(fft(x)))
     ax[0].plot(t, x)
     ax[1].stem(f, y)
     ax[2].stem(f, phase)
     ax[1].set_xlim(0, x_lim[i])
-    ax[2].set_xlim(0, x_lim[i] * 2)
 
     for j in range(3):
         ax[j].set_xlabel(x_label[j])
