@@ -34,7 +34,7 @@ square_duration = 1
 noise_amplitude = .5
 
 x_square = square_amplitude * single_square(t - square_duration, .1)
-x_noise = noise_amplitude * np.random.random(len(t))
+x_noise = 2 * noise_amplitude * np.random.random(len(t))
 x_noise = x_noise - np.mean(x_noise)
 x_mixed = x_square + x_noise
 

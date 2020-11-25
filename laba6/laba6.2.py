@@ -18,7 +18,7 @@ sin_amplitude = 1
 noise_amplitude = 2
 
 x_sin = sin_amplitude * np.sin(2 * np.pi * frequency * t)
-x_noise = noise_amplitude * np.random.random(len(t))
+x_noise = 2 * noise_amplitude * np.random.random(len(t))
 x_noise = x_noise - np.mean(x_noise)
 x_mixed = x_sin + x_noise
 
