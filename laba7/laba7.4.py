@@ -37,7 +37,7 @@ y = np.correlate(x2, x1, mode="full") / np.sum(x2 ** 2)
 t_y = np.linspace(-duration, duration, len(y))
 
 title = ["Графік сигналу 1", "Графік сигналу 2", "Графік взаємнокореляційної функції"]
-x_label = ["Час, с", "Час, с", "Лаг"]
+x_label = ["Час, с", "Час, с", "Зсув в часі, с"]
 y_label = ["Амплітуда", "Амплітуда", "Кореляція"]
 
 figure, axes = plt.subplots(3, constrained_layout=True)

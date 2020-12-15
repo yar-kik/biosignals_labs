@@ -11,15 +11,16 @@ sample_rate = 256
 t = np.linspace(0, duration, duration * sample_rate)
 x = np.random.randn(len(t))
 y = np.correlate(x, x, mode="full") / sum(x ** 2)  # нормування значень
+t_y = np.linspace(-duration, duration, len(y))
 
 title = ["Графік сигналу із нормальним розподілом",
          "Графік автокореляційної функції"]
-x_label = ["Час, с", "Лаг"]
+x_label = ["Час, с", "Зсув в часі, с"]
 y_label = ["Амплітуда", "Автокореляція"]
 figure, axes = plt.subplots(2, constrained_layout=True)
 figure.set_size_inches(12, 6)
 axes[0].plot(t, x)
-axes[1].stem(y)
+axes[1].stem(t_y, y)
 for i, ax in enumerate(axes):
     ax.set_title(title[i])
     ax.set_xlabel(x_label[i])
