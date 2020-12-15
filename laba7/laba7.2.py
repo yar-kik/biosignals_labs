@@ -12,15 +12,21 @@ duration = 1
 sample_rate = 256
 t = np.linspace(0, duration, duration * sample_rate)
 x = 5 * cos(2 * pi * 50 * t) + 2 * cos(2 * pi * 100 * t)
-y = np.correlate(x, x, mode="full")
+y = np.correlate(x, x, mode="full") / np.sum(x ** 2)
 
-plt.figure(num=1, figsize=(8, 6))
-# plt.plot(t, x)
-plt.stem(y)
-plt.title("", fontsize=14)
-plt.xlabel("", fontsize=10)
-plt.ylabel("", fontsize=10)
-plt.minorticks_on()
-plt.grid(which='major', linewidth=1.2)
-plt.grid(which='minor', linewidth=.5)
+title = ["Графік сигналу", "Графік автокореляційної функції"]
+x_label = ["Час, с", "Лаг"]
+y_label = ["Амплітуда", "Автокореляція"]
+
+figure, axes = plt.subplots(2, constrained_layout=True)
+figure.set_size_inches(12, 6)
+axes[0].plot(t, x)
+axes[1].stem(y)
+for i, ax in enumerate(axes):
+    ax.set_title(title[i])
+    ax.set_xlabel(x_label[i])
+    ax.set_ylabel(y_label[i])
+    ax.minorticks_on()
+    ax.grid(which='major', linewidth=1.2)
+    ax.grid(which='minor', linewidth=.5)
 plt.show()
