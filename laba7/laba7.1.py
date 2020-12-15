@@ -10,14 +10,21 @@ duration = 1
 sample_rate = 256
 t = np.linspace(0, duration, duration * sample_rate)
 x = np.random.randn(len(t))
-y = np.correlate(x, x, mode="full") / len(x)  # нормування значень
+y = np.correlate(x, x, mode="full") / sum(x ** 2)  # нормування значень
 
-plt.figure(num=1, figsize=(8, 6))
-plt.stem(y)
-plt.title("Графік автокореляційної функції", fontsize=14)
-plt.xlabel("Лаг", fontsize=10)  # лаг - величина зсуву в часі
-plt.ylabel("Автокореляція", fontsize=10)
-plt.minorticks_on()
-plt.grid(which='major', linewidth=1.2)
-plt.grid(which='minor', linewidth=.5)
+title = ["Графік сигналу із нормальним розподілом",
+         "Графік автокореляційної функції"]
+x_label = ["Час, с", "Лаг"]
+y_label = ["Амплітуда", "Автокореляція"]
+figure, axes = plt.subplots(2, constrained_layout=True)
+figure.set_size_inches(12, 6)
+axes[0].plot(t, x)
+axes[1].stem(y)
+for i, ax in enumerate(axes):
+    ax.set_title(title[i])
+    ax.set_xlabel(x_label[i])
+    ax.set_ylabel(y_label[i])
+    ax.minorticks_on()
+    ax.grid(which='major', linewidth=1.2)
+    ax.grid(which='minor', linewidth=.5)
 plt.show()
