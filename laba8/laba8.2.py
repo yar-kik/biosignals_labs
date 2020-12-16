@@ -8,11 +8,10 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import ricker, morlet2, cwt
+import pywt
 
-a = [np.arange(.01, .11, 0.02), np.arange(.2, 1, .2), np.arange(2, 30, 2)]
+a = [np.arange(.2, 1, .2), np.arange(2, 22, 2)]
 a = np.hstack(a)
-wavelet_width = 4
 duration = 10
 sample_rate = 256
 frequency1 = 10
@@ -29,30 +28,22 @@ x3 = np.append(2 * s2, 2 * s1)
 
 x = [x1, x2, x3]
 time = [t1, t2, t2]
-cwt_matrix = cwt(x2, ricker, a)
-print(cwt_matrix.shape)
-plt.figure(num=1, figsize=(8, 6))
-# plt.pcolormesh(cwt_matrix, shading='gouraud')
-# plt.plot(y)
-plt.imshow(cwt_matrix, cmap='PRGn', aspect='auto',
-           vmax=abs(cwt_matrix).max(), vmin=-abs(cwt_matrix).max())
-plt.title("", fontsize=14)
-plt.xlabel("", fontsize=10)
-plt.ylabel("", fontsize=10)
-plt.minorticks_on()
-plt.grid(which='major', linewidth=1.2)
-plt.grid(which='minor', linewidth=.5)
-plt.show()
 
-# figure, axes = plt.subplots(2, constrained_layout=True)
-# figure.set_size_inches(12, 6)
-# for i, ax in enumerate(axes):
-#     ax.plot(wavelets[i])
-#     for j in range(len(wavelets)):
-#         ax.set_xlabel("Номер відліку")
-#         ax.set_title("")
-#         ax.set_ylabel("Амплітуда")
-#         ax.minorticks_on()
-#         ax.grid(which='major', linewidth=1.2)
-#         ax.grid(which='minor', linewidth=.5)
-# plt.show()
+x_label = ["Час, с", "Час, с"]
+y_label = ["Амплітуда", "Масштаб"]
+title = [[f'Сигнал $S_1$+$S_2$', "Скейлограма"],
+         [f"Сигнал 2*$S_1$, 2*$S_2$", "Скейлограма"],
+         [f"Сигнал 2*$S_2$, 2*$S_1$", "Скейлограма"]]
+figure, axes = plt.subplots(len(x), 2, constrained_layout=True)
+figure.set_size_inches(12, 6)
+for i, ax in enumerate(axes):
+    cwt_matrix, _ = pywt.cwt(x[i], a, "gaus1")
+    ax[0].plot(time[i], x[i])
+    im = ax[1].imshow(abs(cwt_matrix), cmap='hot', aspect='auto', extent=[t1[0], t1[-1], a[-1], a[0]])
+    cbar = figure.colorbar(im, ax=ax[1])
+    ax[1].invert_yaxis()
+    for j in range(2):
+        ax[j].set_xlabel(x_label[j])
+        ax[j].set_title(title[i][j])
+        ax[j].set_ylabel(y_label[j])
+plt.show()
